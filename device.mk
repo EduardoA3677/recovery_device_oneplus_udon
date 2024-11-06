@@ -41,7 +41,7 @@ AB_OTA_PARTITIONS := abl aop aop_config bluetooth boot cpucp devcfg dsp dtbo eng
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl-qti \
     android.hardware.boot@1.2-impl-qti.recovery \
-    android.hardware.boot@1.2-service 
+    android.hardware.boot@1.2-service
 
 # Health
 PRODUCT_PACKAGES += \

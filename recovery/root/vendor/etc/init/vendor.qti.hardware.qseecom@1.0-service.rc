@@ -5,10 +5,12 @@
 #
 #
 
-on init
+on property:hwservicemanager.ready=true && property:vendor.sys.listeners.registered=true
     start qseecom-service
 
-service qseecom-service /vendor/bin/hw/vendor.qti.hardware.qseecom@1.0-service
-    class hal
-    user system
-    group system drmrpc
+service qseecom-service /system/bin/vendor.qti.hardware.qseecom@1.0-service
+    user root
+    group root drmrpc
+    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
+    disabled
+    seclabel u:r:recovery:s0

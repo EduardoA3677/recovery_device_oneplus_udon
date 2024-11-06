@@ -71,7 +71,6 @@ fi
 # Display Settings
 
     export OF_ALLOW_DISABLE_NAVBAR=0
-    export OF_USE_GREEN_LED=0
 
     export OF_SCREEN_H=2412
     export OF_STATUS_H=106
@@ -97,7 +96,6 @@ fi
     export OF_PATCH_AVB20=1
     export OF_NO_SPLASH_CHANGE=1
     export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
-    export FOX_BUGGED_AOSP_ARB_WORKAROUND="1616300800"; # Sun 21 Mar 04:26:40 GMT 2021
 
 	lunch twrp_$FDEVICE-eng
 	# let's see what are our build VARs

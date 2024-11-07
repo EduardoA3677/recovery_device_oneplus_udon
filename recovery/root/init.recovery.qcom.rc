@@ -64,6 +64,7 @@ on property:twrp.modules.loaded=true
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
     start healthd
+    start vendor.qti.vibrator
 
 on property:ro.twrp.fastbootd=1
     # Load ADSP firmware for PMIC

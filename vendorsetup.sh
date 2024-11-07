@@ -51,7 +51,7 @@ fi
 # Device Info
     export FOX_ARCH=arm64
     export FOX_VARIANT="12.1"
-	 export TARGET_DEVICE_ALT="PHK110, CPH2487, udon, OP5913L1, OP5961L1, ossi, qss"
+    export TARGET_DEVICE_ALT="PHK110, CPH2487, udon, OP5913L1, OP5961L1, ossi, qssi"
     export FOX_TARGET_DEVICES="PHK110, CPH2487 ,udon ,OP5913L1, OP5961L1, ossi, qssi"
     export FOX_USE_SPECIFIC_MAGISK_ZIP=$(pwd)/device/oneplus/udon/Magisk-v28.0.zip
 
@@ -82,8 +82,6 @@ fi
     export OF_SPLASH_MAX_SIZE=16384
   
 # Partitions Handler
-    export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
-    export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
   
 # A/B-Related
     export OF_AB_DEVICE_WITH_RECOVERY_PARTITION=1
@@ -91,11 +89,9 @@ fi
     export OF_VANILLA_BUILD=0
   
 # Other Patches
-    export OF_NO_RELOAD_AFTER_DECRYPTION=1
     export OF_FBE_METADATA_MOUNT_IGNORE=1
-    export OF_PATCH_AVB20=1
     export OF_NO_SPLASH_CHANGE=1
-    export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
+    
 
 	lunch twrp_$FDEVICE-eng
 	# let's see what are our build VARs

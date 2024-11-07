@@ -98,6 +98,11 @@ PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock.recovery \
     fastbootd
 
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.1 \
+    android.hardware.keymaster@4.0-impl \
+    android.hardware.keymaster@4.0-service
+
 # qcom decryption
 PRODUCT_PACKAGES += \
     qcom_decrypt \

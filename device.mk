@@ -45,7 +45,7 @@ PRODUCT_PACKAGES += \
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl-qti \
+    android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
 
 PRODUCT_PACKAGES += \
@@ -99,7 +99,6 @@ PRODUCT_PACKAGES += \
     fastbootd
 
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@4.1-service-qti \
     android.hardware.keymaster@4.1.recovery \
     libkeymaster_messages
 
@@ -127,3 +126,8 @@ SOONG_CONFIG_ufsbsg_ufsframework := bsg
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+
+PRODUCT_PACKAGES += \
+    android.hardware.keymaster@4.0-service-qti \
+    android.hardware.keymaster@4.0-strongbox-service-qti \
+    android.hardware.keymaster@4.1-service-qti

@@ -148,6 +148,7 @@ TWRP_INCLUDE_LOGCAT := true
 
 # Fastbootd
 TW_INCLUDE_FASTBOOTD := true
+RECOVERY_SDCARD_ON_DATA := true
 
 # Other TWRP Configurations
 TARGET_RECOVERY_QCOM_RTC_FIX := true

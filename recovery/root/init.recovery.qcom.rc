@@ -28,6 +28,7 @@
 import /init.recovery.qcom_decrypt.rc
 
 on fs
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     mkdir /dev/block/bootdevice/ 0770 shell system
     mkdir /dev/block/bootdevice/by-name/ 0770 shell system
     symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/boot_a /dev/block/bootdevice/by-name/boot_a
@@ -37,7 +38,18 @@ on fs
     symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/modemst2 /dev/block/bootdevice/by-name/modemst2
     symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/ocdt /dev/block/bootdevice/by-name/ocdt
     symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/persist /dev/block/bootdevice/by-name/persist
-    
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/misc /dev/block/bootdevice/by-name/misc
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_a
+    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_b
+    symlink /dev/block/bootdevice/by-name/mdm_oem_dycnvbk /dev/block/bootdevice/by-name/mdm_oem_dycnvbk_a
+    symlink /dev/block/bootdevice/by-name/mdm_oem_dycnvbk /dev/block/bootdevice/by-name/mdm_oem_dycnvbk_b
+    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_a
+    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_b
+    # Set fscklog permission
+    chown root system /dev/fscklogs/log
+    chmod 0770 /dev/fscklogs/log
+
 on property:hwservicemanager.ready=true
     setprop ro.separate.soft ${ro.boot.prjname}
 
@@ -56,13 +68,6 @@ on property:twrp.modules.loaded=true
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     # Load ADSP firmware for PMIC
-    insmod /vendor/lib/modules/q6_pdr_dlkm.ko
-    insmod /vendor/lib/modules/q6_notifier_dlkm.ko
-    insmod /vendor/lib/modules/snd_event_dlkm.ko
-    insmod /vendor/lib/modules/apr_dlkm.ko
-    insmod /vendor/lib/modules/gpr_dlkm.ko
-    insmod /vendor/lib/modules/spf_core_dlkm.ko
-    insmod /vendor/lib/modules/adsp_loader_dlkm.ko
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery

@@ -1,4 +1,4 @@
-# Copyright (c) 2017-2023, The Linux Foundation. All rights reserved.
+# Copyright (c) 2017-2018,2020-2021 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -27,54 +27,54 @@
 
 import /init.recovery.qcom_decrypt.rc
 
+on early-init
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+    setprop sys.usb.configfs 1
+
+on init
+    write /sys/class/backlight/panel0-backlight/brightness 200
+    setprop sys.usb.config adb
+
 on fs
-    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
-    mkdir /dev/block/bootdevice/ 0770 shell system
-    mkdir /dev/block/bootdevice/by-name/ 0770 shell system
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/boot_a /dev/block/bootdevice/by-name/boot_a
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/boot_b /dev/block/bootdevice/by-name/boot_b
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/system /dev/block/bootdevice/by-name/system
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/modemst1 /dev/block/bootdevice/by-name/modemst1
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/modemst2 /dev/block/bootdevice/by-name/modemst2
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/ocdt /dev/block/bootdevice/by-name/ocdt
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/persist /dev/block/bootdevice/by-name/persist
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice}/by-name/misc /dev/block/bootdevice/by-name/misc
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_a
-    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_b
-    symlink /dev/block/bootdevice/by-name/mdm_oem_dycnvbk /dev/block/bootdevice/by-name/mdm_oem_dycnvbk_a
-    symlink /dev/block/bootdevice/by-name/mdm_oem_dycnvbk /dev/block/bootdevice/by-name/mdm_oem_dycnvbk_b
-    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_a
-    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_b
-    symlink /dev/block/bootdevice/by-name/misc /dev/block/bootdevice/by-name/misc
-    # Set fscklog permission
-    chown root system /dev/fscklogs/log
-    chmod 0770 /dev/fscklogs/log
+
+    # Load ADSP firmware for PMIC
+    mkdir /firmware
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    mkdir /mnt/vendor/persist
+    mount ext4 /dev/block/by-name/persist /mnt/vendor/persist rw
+
+on post-fs
+    start boot-hal-1-2
+
+service healthd /system/bin/android.hardware.health@2.1-service -r
+#    critical
+    seclabel u:r:recovery:s0
+
+on property:twrp.modules.loaded=true
+    # Load ADSP firmware for PMIC
+    insmod /vendor/lib/modules/q6_pdr_dlkm.ko
+    insmod /vendor/lib/modules/q6_notifier_dlkm.ko
+    insmod /vendor/lib/modules/snd_event_dlkm.ko
+    insmod /vendor/lib/modules/apr_dlkm.ko
+    insmod /vendor/lib/modules/gpr_dlkm.ko
+    insmod /vendor/lib/modules/spf_core_dlkm.ko
+    insmod /vendor/lib/modules/adsp_loader_dlkm.ko
+    write /sys/kernel/boot_adsp/boot 1
+    wait /sys/class/power_supply/battery
+    start healthd
+
+on property:ro.twrp.fastbootd=1
+    # Load ADSP firmware for PMIC
+    wait /sys/kernel/boot_adsp/boot
+    write /sys/kernel/boot_adsp/boot 1
+    wait /sys/class/power_supply/battery
+    start healthd
+    umount /firmware
 
 on property:hwservicemanager.ready=true
     setprop ro.separate.soft ${ro.boot.prjname}
 
 on property:twrp.decrypt.done=true
     setprop ro.separate.soft ${ro.boot.prjname}
-
-on init
-    start boot-hal-1-2
-    setprop sys.usb.configfs 1
-
-on boot
-    setprop sys.usb.config adb
-
-on property:twrp.modules.loaded=true
-    # Mount firmware
-    mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-    # Load ADSP firmware for PMIC
-    write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
-    mkdir /dev/fscklogs 0770 root system
-    start health-hal-2-1
-    start healthd
-    umount /firmware
-
-on property:twrp.all.users.decrypted=true
-    umount /mnt/vendor/persist

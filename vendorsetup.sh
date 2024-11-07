@@ -91,7 +91,8 @@ fi
 # Other Patches
     export OF_FBE_METADATA_MOUNT_IGNORE=1
     export OF_NO_SPLASH_CHANGE=1
-    
+    export OF_NO_RELOAD_AFTER_DECRYPTION=1
+    export OF_PATCH_AVB20=1
 
 	lunch twrp_$FDEVICE-eng
 	# let's see what are our build VARs

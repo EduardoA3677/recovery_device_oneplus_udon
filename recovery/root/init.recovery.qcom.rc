@@ -64,7 +64,6 @@ on property:twrp.modules.loaded=true
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
     start healthd
-    start health-hal-2-1
     start vendor.qti.vibrator
 
 on property:ro.twrp.fastbootd=1
@@ -73,7 +72,6 @@ on property:ro.twrp.fastbootd=1
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
     start healthd
-    start health-hal-2-1
     start vendor.qti.vibrator
     umount /firmware
 

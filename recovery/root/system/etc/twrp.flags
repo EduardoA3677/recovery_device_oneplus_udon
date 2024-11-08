@@ -1,77 +1,33 @@
 
 # mount point   fstype  device                                          device2             flags
 # Userdata/Metadata partitions
-/metadata           ext4     /dev/block/by-name/metadata                    flags=display="Metadata"
-/data               f2fs     /dev/block/bootdevice/by-name/userdata         flags=display="Data";fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized+wrappedkey_v0,metadata_encryption=aes-256-xts:wrappedkey_v0,keydirectory=/metadata/vold/metadata_encryption
-/storage            ext4     /data/media/0                                  flags=display="Internal Storage";backup=1;usermrf;fsflags="bind";removable
-/cache              ext4     /dev/block/by-name/oplusreserve2               flags=display="Cache";backup=1;wipeingui;wipeduringfactoryreset
-
-/system             ext4     /dev/block/mapper/system                       flags=display="System";logical;slotselect
-/system_ext         ext4     /dev/block/mapper/system_ext                   flags=display="System Ext";logical;slotselect
-/product            ext4     /dev/block/mapper/product                      flags=display="Product";logical;slotselect
-/vendor             ext4     /dev/block/mapper/vendor                       flags=display="Vendor";logical;slotselect
-/vendor_dlkm        ext4     /dev/block/mapper/vendor_dlkm                  flags=display="Vendor DLKM";logical;slotselect
-/odm                ext4     /dev/block/mapper/odm                          flags=display="Odm";logical;slotselect
-/odm_dlkm           ext4     /dev/block/mapper/odm_dlkm                     flags=display="Odm Dlkm";logical;slotselect
-/my_engineering     ext4     /dev/block/mapper/my_engineering               flags=display="My Engineering";logical;slotselect
-/my_product         ext4     /dev/block/mapper/my_product                   flags=display="My Product";logical;slotselect
-/my_bigball         ext4     /dev/block/mapper/my_bigball                   flags=display="My Bigball";logical;slotselect
-/my_heytap          ext4     /dev/block/mapper/my_heytap                    flags=display="My Heytap";logical;slotselect
-/my_region          ext4     /dev/block/mapper/my_region                    flags=display="My Region";logical;slotselect
-/my_carrier         ext4     /dev/block/mapper/my_carrier                   flags=display="My Carrier";logical;slotselect
-/my_manifest        ext4     /dev/block/mapper/my_manifest                  flags=display="My Manifest";logical;slotselect
-/my_stock           ext4     /dev/block/mapper/my_stock                     flags=display="My Stock";logical;slotselect
-/my_company         ext4     /dev/block/mapper/my_company                   flags=display="My Company";logical;slotselect
-/my_preload         ext4     /dev/block/mapper/my_preload                   flags=display="My Preload";logical;slotselect
+/metadata       ext4    /dev/block/by-name/metadata                                         flags=display="metadata"
 
 # Other partitions
 /boot           emmc    /dev/block/bootdevice/by-name/boot                                  flags=slotselect
-/recovery       emmc    /dev/block/bootdevice/by-name/recovery                              flags=slotselect;display="Recovery";backup=1;flashimg=1
-/vendor_boot    emmc    /dev/block/bootdevice/by-name/vendor_boot                           flags=slotselect;display="Vendor Boot";backup=1;flashimg=1
+/recovery       emmc    /dev/block/bootdevice/by-name/recovery                              flags=slotselect;display="recovery";backup=1;flashimg=1
+/vendor_boot    emmc    /dev/block/bootdevice/by-name/vendor_boot                           flags=slotselect;display="vendor boot";backup=1;flashimg=1
 
 # AVB partitions
-/dtbo           emmc    /dev/block/bootdevice/by-name/dtbo                                  flags=slotselect;display="Dtbo";backup=1;flashimg=1
-/vbmeta         emmc    /dev/block/bootdevice/by-name/vbmeta                                flags=slotselect;display="Vbmeta";backup=1;flashimg=1
-/vbmeta_system  emmc    /dev/block/bootdevice/by-name/vbmeta_system                         flags=slotselect;display="Vbmeta System";backup=1;flashimg=1
-/vbmeta_vendor  emmc    /dev/block/bootdevice/by-name/vbmeta_vendor                         flags=slotselect;display="Vbmeta Vendor";backup=1;flashimg=1
+/dtbo           emmc    /dev/block/bootdevice/by-name/dtbo                                  flags=slotselect;display="dtbo";backup=1;flashimg=1
+/vbmeta         emmc    /dev/block/bootdevice/by-name/vbmeta                                flags=slotselect;display="vbmeta";backup=1;flashimg=1
+/vbmeta_system  emmc    /dev/block/bootdevice/by-name/vbmeta_system                         flags=slotselect;display="vbmeta system";backup=1;flashimg=1
 
 # Persistent Firmware & Properties
-/firmware       vfat    /dev/block/bootdevice/by-name/modem                                 flags=slotselect;display="Firmware";mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
-/persist        ext4    /dev/block/bootdevice/by-name/persist                               flags=display="Persist";fsflags=ro
-/persist_image  emmc    /dev/block/bootdevice/by-name/persist                               flags=display="Persist";backup=1
+/firmware       vfat    /dev/block/bootdevice/by-name/modem                                 flags=slotselect;display="firmware";mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"
+/persist        ext4    /dev/block/bootdevice/by-name/persist                               flags=display="persist";fsflags=ro
+/persist_image  emmc    /dev/block/bootdevice/by-name/persist                               flags=display="persist";backup=1
 
 # Modem partitions
-/modem          emmc    /dev/block/bootdevice/by-name/modem                                 flags=slotselect;backup=1;display="Modem"
+/modem          emmc    /dev/block/bootdevice/by-name/modem                                 flags=slotselect;backup=1;display="modem"
 /bluetooth      emmc    /dev/block/bootdevice/by-name/bluetooth                             flags=slotselect;backup=1;subpartitionof=/modem
 /dsp            emmc    /dev/block/bootdevice/by-name/dsp                                   flags=slotselect;backup=1;subpartitionof=/modem
 
 # EFS partitions
 /efs1           emmc    /dev/block/bootdevice/by-name/modemst1                              flags=backup=1;display="Efs"
 /efs2           emmc    /dev/block/bootdevice/by-name/modemst2                              flags=backup=1;subpartitionof=/efs1
-/super          emmc    /dev/block/bootdevice/by-name/super                                 flags=display="Super";backup=1;flashimg=1
-/oplusdycnvbk   emmc    /dev/block/bootdevice/by-name/oplusdycnvbk                          flags=display="Oplusdycnvbk";backup=1;flashimg=1
-/ocdt           emmc    /dev/block/bootdevice/by-name/ocdt                                  flags=display="Ocdt";backup=1;flashimg=1
+/super          emmc    /dev/block/bootdevice/by-name/super                                 flags=display="super";backup=1;flashimg=1
+/oplusdycnvbk   emmc    /dev/block/bootdevice/by-name/oplusdycnvbk                          flags=display="oplusdycnvbk";backup=1;flashimg=1
+/ocdt           emmc    /dev/block/bootdevice/by-name/ocdt                                  flags=display="ocdt";backup=1;flashimg=1
 /efsg           emmc    /dev/block/bootdevice/by-name/fsg                                   flags=backup=1;subpartitionof=/efs1
 /efsc           emmc    /dev/block/bootdevice/by-name/fsc                                   flags=backup=1;subpartitionof=/efs1
-
-/abl                   emmc     /dev/block/bootdevice/by-name/abl                   flags=display="Abl";slotselect
-/aop                   emmc     /dev/block/bootdevice/by-name/aop                   flags=display="Aop";slotselect
-/aop_config            emmc     /dev/block/bootdevice/by-name/aop_config            flags=display="Aop_onfig";slotselect
-/cpucp                 emmc     /dev/block/bootdevice/by-name/cpucp                 flags=display="Cpucp";slotselect
-/devcfg                emmc     /dev/block/bootdevice/by-name/devcfg                flags=display="Devcfg";slotselect
-/engineering_cdt       emmc     /dev/block/bootdevice/by-name/engineering_cdt       flags=display="Engineering_cdt";slotselect
-/featenabler           emmc     /dev/block/bootdevice/by-name/featenabler           flags=display="Featenabler";slotselect
-/hyp                   emmc     /dev/block/bootdevice/by-name/hyp                   flags=display="Hyo";slotselect
-/imagefv               emmc     /dev/block/bootdevice/by-name/imagefv               flags=display="Imagefv";slotselect
-/keymaster             emmc     /dev/block/bootdevice/by-name/keymaster             flags=display="Keymaster";slotselect
-/oplus_sec             emmc     /dev/block/bootdevice/by-name/oplus_sec             flags=display="Oplus_sec";slotselect
-/oplusstanvbk          emmc     /dev/block/bootdevice/by-name/oplusstanvbk          flags=display="Oplusstanvbk";slotselect
-/qupfw                 emmc     /dev/block/bootdevice/by-name/qupfw                 flags=display="Qupfw";slotselect
-/shrm                  emmc     /dev/block/bootdevice/by-name/shrm                  flags=display="Shrm";slotselect
-/splash                emmc     /dev/block/bootdevice/by-name/splash                flags=display="Splash";slotselect
-/tz                    emmc     /dev/block/bootdevice/by-name/tz                    flags=display="Tz";slotselect
-/uefi                  emmc     /dev/block/bootdevice/by-name/uefi                  flags=display="Uefi";slotselect
-/uefisecapp            emmc     /dev/block/bootdevice/by-name/uefisecapp            flags=display="Uefisecapp";slotselect
-/xbl                   emmc     /dev/block/bootdevice/by-name/xbl                   flags=display="Xbl";slotselect
-/xbl_config            emmc     /dev/block/bootdevice/by-name/xbl_config            flags=display="Xbl_config";slotselect
-/xbl_ramdump           emmc     /dev/block/bootdevice/by-name/xbl_ramdump           flags=display="Xbl_ramdump";slotselect

@@ -80,8 +80,9 @@ fi
     export OF_STATUS_INDENT_LEFT=48
     export OF_STATUS_INDENT_RIGHT=48
     export OF_CLOCK_POS=0
-# Partitions Handler
-  
+
+   	export FOX_SETTINGS_ROOT_DIRECTORY="/persist/OFRP"
+
 # A/B-Related
     export OF_AB_DEVICE_WITH_RECOVERY_PARTITION=1
     export FOX_AB_DEVICE=1

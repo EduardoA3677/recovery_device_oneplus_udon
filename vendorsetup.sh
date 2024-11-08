@@ -43,6 +43,7 @@ fi
     export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
     export LC_ALL="C"
   
+   
 # Maintaining Info
     export OF_MAINTAINER="EduardoA3677"
     export FOX_VERSION=$(date +%y.%m.%d)
@@ -69,6 +70,8 @@ fi
     export FOX_DELETE_AROMAFM=1
   
 # Display Settings
+# Run a process after formatting data to work-around MTP issues
+    export OF_RUN_POST_FORMAT_PROCESS=1
 
     export OF_ALLOW_DISABLE_NAVBAR=0
 

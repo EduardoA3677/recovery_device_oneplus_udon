@@ -64,6 +64,7 @@ fi
     export FOX_ASH_IS_BASH=1
     export FOX_USE_GREP_BINARY=1
     export FOX_USE_XZ_UTILS=1
+    export FOX_USE_NANO_EDITOR=1
     export OF_ENABLE_LPTOOLS=1
     export FOX_DELETE_AROMAFM=1
   
@@ -71,12 +72,15 @@ fi
 
     export OF_ALLOW_DISABLE_NAVBAR=0
 
-    export OF_ALLOW_DISABLE_NAVBAR=0
-    export OF_SCREEN_H=2400
-    export OF_STATUS_H=120
+    export OF_SCREEN_H=2412
+    export OF_STATUS_H=106
     export OF_STATUS_INDENT_LEFT=48
     export OF_STATUS_INDENT_RIGHT=48
-    export OF_CLOCK_POS=0
+    export OF_HIDE_NOTCH=1
+    export OF_CLOCK_POS=1
+    export OF_OPTIONS_LIST_NUM=6
+    export OF_SPLASH_MAX_SIZE=16384
+    export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
 # Partitions Handler
   
 # A/B-Related
@@ -87,8 +91,9 @@ fi
 # Other Patches
     export OF_FBE_METADATA_MOUNT_IGNORE=1
     export OF_NO_SPLASH_CHANGE=1
-    export OF_NO_TREBLE_COMPATIBILITY_CHECK=1
-    
+    export OF_NO_RELOAD_AFTER_DECRYPTION=1
+    export OF_PATCH_AVB20=1
+
 	lunch twrp_$FDEVICE-eng
 	# let's see what are our build VARs
 	if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then

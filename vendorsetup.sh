@@ -67,20 +67,19 @@ fi
     export FOX_USE_XZ_UTILS=1
     export OF_ENABLE_LPTOOLS=1
     export FOX_DELETE_AROMAFM=1
-  
+
+  	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
+	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 # Display Settings
 # Run a process after formatting data to work-around MTP issues
     export OF_RUN_POST_FORMAT_PROCESS=1
-
     export OF_ALLOW_DISABLE_NAVBAR=0
-
     export OF_ALLOW_DISABLE_NAVBAR=0
     export OF_SCREEN_H=2400
     export OF_STATUS_H=120
     export OF_STATUS_INDENT_LEFT=48
     export OF_STATUS_INDENT_RIGHT=48
     export OF_CLOCK_POS=0
-
    	export FOX_SETTINGS_ROOT_DIRECTORY="/persist/OFRP"
 
 # A/B-Related
@@ -88,11 +87,18 @@ fi
     export FOX_AB_DEVICE=1
     export FOX_VIRTUAL_AB_DEVICE=1
     export OF_VANILLA_BUILD=0
-  
+    export OF_NO_RELOAD_AFTER_DECRYPTION=1
+    export OF_SKIP_MULTIUSER_FOLDERS_BACKUP=1
+    export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
+    export FOX_BUGGED_AOSP_ARB_WORKAROUND="1616300800";
+    export OF_UNBIND_SDCARD_F2FS=1
     export OF_SUPPORT_ALL_PAYLOAD_OTA_UPDATES=1
-    export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=0
+    export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=1
     export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
     export OF_DISABLE_MIUI_OTA_BY_DEFAULT=1
+
+    export FOX_PATCH_VBMETA_FLAG=1
+    export OF_SUPPORT_VBMETA_AVB2_PATCHING=1
 # Other Patches
     export OF_FBE_METADATA_MOUNT_IGNORE=1
     export OF_NO_SPLASH_CHANGE=1

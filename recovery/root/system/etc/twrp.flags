@@ -2,7 +2,6 @@
 # mount point   fstype  device                                          device2             flags
 # Userdata/Metadata partitions
 /metadata       ext4    /dev/block/by-name/metadata                                         flags=display="metadata"
-/storage        ext4    /data/media/0                                                       flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
 
 # Other partitions
 /boot           emmc    /dev/block/bootdevice/by-name/boot                                  flags=slotselect

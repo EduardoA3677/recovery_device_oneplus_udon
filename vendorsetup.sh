@@ -80,7 +80,6 @@ fi
     export OF_CLOCK_POS=1
     export OF_OPTIONS_LIST_NUM=6
     export OF_SPLASH_MAX_SIZE=16384
-    export OF_FIX_DECRYPTION_ON_DATA_MEDIA=1
 # Partitions Handler
   
 # A/B-Related

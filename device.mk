@@ -26,12 +26,24 @@ QCOM_BOARD_PLATFORMS += $(PRODUCT_PLATFORM)
 TARGET_BOARD_PLATFORM := $(PRODUCT_PLATFORM)
 TARGET_BOOTLOADER_BOARD_NAME := $(TARGET_BOARD_PLATFORM)
 
+BOARD_SHIPPING_API_LEVEL := 31
+BOARD_API_LEVEL := 31
+SHIPPING_API_LEVEL := 31
+PRODUCT_SHIPPING_API_LEVEL := 31
+
+
 BUILD_BROKEN_DUP_RULES := true
 
 RELAX_USES_LIBRARY_CHECK := true
 
 # VNDK
 PRODUCT_TARGET_VNDK_VERSION := 32
+
+#Support to compile recovery without msm headers
+TARGET_HAS_GENERIC_KERNEL_HEADERS := true
+
+# Dynamic partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # A/B support
 AB_OTA_UPDATER := true
@@ -80,12 +92,6 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
     $(LOCAL_PATH)/security/local_OTA \
     $(LOCAL_PATH)/security/special_OTA
 
-#Support to compile recovery without msm headers
-TARGET_HAS_GENERIC_KERNEL_HEADERS := true
-
-# Dynamic partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
-PRODUCT_BUILD_SUPER_PARTITION := false
 
 PRODUCT_PACKAGES += \
     android.hardware.fastboot@1.1-impl-mock \
@@ -95,11 +101,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
-
-BOARD_SHIPPING_API_LEVEL := 31
-BOARD_API_LEVEL := 31
-SHIPPING_API_LEVEL := 31
-PRODUCT_SHIPPING_API_LEVEL := 31
 
 # Enable Fuse Passthrough
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true

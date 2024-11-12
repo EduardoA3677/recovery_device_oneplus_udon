@@ -81,6 +81,8 @@ fi
     export OF_CLOCK_POS=1
     export OF_OPTIONS_LIST_NUM=6
     export OF_SPLASH_MAX_SIZE=16384
+    export OF_USE_GREEN_LED=0
+
 
 # A/B-Related
     export OF_AB_DEVICE_WITH_RECOVERY_PARTITION=1

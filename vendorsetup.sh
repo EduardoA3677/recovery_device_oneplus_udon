@@ -70,7 +70,6 @@ fi
     export FOX_DELETE_AROMAFM=1
     export FOX_USE_ZIP_BINARY=1
 
-  
 # Display Settings
 
     export OF_ALLOW_DISABLE_NAVBAR=0
@@ -82,8 +81,7 @@ fi
     export OF_CLOCK_POS=1
     export OF_OPTIONS_LIST_NUM=6
     export OF_SPLASH_MAX_SIZE=16384
-# Partitions Handler
-  
+
 # A/B-Related
     export OF_AB_DEVICE_WITH_RECOVERY_PARTITION=1
     export FOX_AB_DEVICE=1

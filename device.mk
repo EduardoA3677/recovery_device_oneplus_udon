@@ -37,7 +37,7 @@ BUILD_BROKEN_DUP_RULES := true
 RELAX_USES_LIBRARY_CHECK := true
 
 # VNDK
-PRODUCT_TARGET_VNDK_VERSION := 32
+PRODUCT_TARGET_VNDK_VERSION := 31
 
 #Support to compile recovery without msm headers
 TARGET_HAS_GENERIC_KERNEL_HEADERS := true
@@ -48,7 +48,7 @@ PRODUCT_USE_DYNAMIC_PARTITIONS := true
 # A/B support
 AB_OTA_UPDATER := true
 
-AB_OTA_PARTITIONS := super abl aop aop_config bluetooth boot cpucp devcfg dsp dtbo engineering_cdt featenabler hyp imagefv keymaster modem my_bigball my_carrier my_colorospro my_company my_engineering my_heytap my_manifest my_preload my_product my_region my_stock odm odm_dlkm oplus_sec oplusstanvbk product qupfw recovery shrm splash system system_ext tz uefi uefisecapp vbmeta vbmeta_system vbmeta_vendor vendor vendor_boot vendor_dlkm xbl xbl_config xbl_ramdump
+AB_OTA_PARTITIONS ?= boot vendor_boot recovery vendor_dlkm dtbo vbmeta super odm_dlkm
 
 PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl-qti \
@@ -59,6 +59,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.health@2.1-impl \
     android.hardware.health@2.1-service
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(COMMON_PATH)
 
 # Vibrator
 PRODUCT_PACKAGES += \

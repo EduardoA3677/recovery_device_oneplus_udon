@@ -45,7 +45,7 @@ fi
   
 # Maintaining Info
     export OF_MAINTAINER="EduardoA3677"
-    export FOX_VERSION="1_EduardoA3677"
+    export FOX_VERSION="EduardoA3677"
  
 # Device Info
     export FOX_ARCH=arm64

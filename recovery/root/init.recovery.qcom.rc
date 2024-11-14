@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2012, 2014-2015, The Linux Foundation. All rights reserved.
+# Copyright (c) 2017-2018,2020 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -41,39 +41,69 @@ service overrideprops /system/bin/overrideprops.sh
     oneshot
     seclabel u:r:recovery:s0
 
-on init
-    start boot-hal-1-2
-    #start boot-qti
+on property:ro.boot.usbcontroller=*
+    setprop sys.usb.controller ${ro.boot.usbcontroller}
+    wait /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode
+    write /sys/bus/platform/devices/${ro.boot.usb.dwc3_msm:-a600000.ssusb}/mode peripheral
+    wait /sys/class/udc/${ro.boot.usbcontroller} 1
+
+on early-init
+    #Gerry.ding@BSP.CHG.Basic, 2021/09/28,Add for charge in recovery mode
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on early-fs
     write /proc/sys/kernel/sched_lib_name "recovery,magiskboot,Updater,updater,update_engine_sideload"
     write /proc/sys/kernel/sched_lib_mask_force 255
 
 on fs
+    export LD_LIBRARY_PATH /system/lib64:/vendor/lib64:/vendor/lib64/hw
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
-
-on boot
-    setprop sys.usb.config adb
-    start variant-script
-    start overrideprops
-
-on property:twrp.modules.loaded=true
-    # Mount persist
-    mkdir /mnt/vendor/persist
-    mount ext4 /dev/block/bootdevice/by-name/persist /mnt/vendor/persist ro
+    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_a
+    symlink /dev/block/bootdevice/by-name/mdm_oem_stanvbk /dev/block/bootdevice/by-name/mdm_oem_stanvbk_b
+    symlink /dev/block/bootdevice/by-name/mdm_oem_dycnvbk /dev/block/bootdevice/by-name/mdm_oem_dycnvbk_a
+    symlink /dev/block/bootdevice/by-name/mdm_oem_dycnvbk /dev/block/bootdevice/by-name/mdm_oem_dycnvbk_b
+    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_a
+    symlink /dev/block/bootdevice/by-name/spunvm /dev/block/bootdevice/by-name/spunvm_b
+    symlink /dev/block/bootdevice/by-name/my_colorospro /dev/block/bootdevice/by-name/my_colorospro_a
+    symlink /dev/block/bootdevice/by-name/my_colorospro /dev/block/bootdevice/by-name/my_colorospro_b
+    symlink /dev/block/bootdevice/by-name/my_company /dev/block/bootdevice/by-name/my_company_a
+    symlink /dev/block/bootdevice/by-name/my_company /dev/block/bootdevice/by-name/my_company_b
+    symlink /dev/block/bootdevice/by-name/my_preload /dev/block/bootdevice/by-name/my_preload_a
+    symlink /dev/block/bootdevice/by-name/my_preload /dev/block/bootdevice/by-name/my_preload_b
+    # Set fscklog permission
+    chown root system /dev/fscklogs/log
+    chmod 0770 /dev/fscklogs/log
     # Mount firmware
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-    # Load ADSP firmware for PMIC
+
+on init
+    insmod /vendor/lib/modules/q6_pdr_dlkm.ko
+    insmod /vendor/lib/modules/q6_notifier_dlkm.ko
+    insmod /vendor/lib/modules/snd_event_dlkm.ko
+    insmod /vendor/lib/modules/apr_dlkm.ko
+    insmod /vendor/lib/modules/gpr_dlkm.ko
+    insmod /vendor/lib/modules/spf_core_dlkm.ko
+    insmod /vendor/lib/modules/adsp_loader_dlkm.ko
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
-    #start health-default
-    start health-hal-2-1
-    start vendor.qti.vibrator
-    umount /firmware
+    # Create location for fs_mgr to store abbreviated output from filesystem
+    # checker programs.
+    mkdir /dev/fscklogs 0770 root system
+    setprop sys.usb.config adb
 
-on property:twrp.all.users.decrypted=true
-    umount /mnt/vendor/persist
+on property:hwservicemanager.ready=true
+    setprop ro.separate.soft ${ro.boot.prjname}
+
+on property:twrp.decrypt.done=true
+    setprop ro.separate.soft ${ro.boot.prjname}
+
+on boot
+    start health-hal-2-1
+    start variant-script
+    start overrideprops
+
+on post-fs
+    start boot-hal-1-2

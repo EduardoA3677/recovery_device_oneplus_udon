@@ -28,4 +28,4 @@
 /efs2           emmc    /dev/block/bootdevice/by-name/modemst2                              flags=backup=1;subpartitionof=/efs1
 
 # Removable storage
-/usb-otg        auto    /dev/block/sdg1                                                     flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable
+/usbstorage     vfat    /dev/block/sdg1                                                     flags=fsflags=utf8;display="USB Storage";storage;wipeingui;removable

@@ -102,6 +102,7 @@ on property:twrp.decrypt.done=true
 
 on boot
     start health-hal-2-1
+    start vendor.qti.vibrator
     start variant-script
     start overrideprops
 

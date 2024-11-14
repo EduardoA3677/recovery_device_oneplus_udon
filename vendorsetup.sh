@@ -97,14 +97,6 @@ fi
     export OF_PATCH_AVB20=1
     export FOX_BUGGED_AOSP_ARB_WORKAROUND="1616300800"; # Sun 21 Mar 04:26:40 GMT 2021
 
-# OTA for custom ROMs
-    export OF_SUPPORT_ALL_PAYLOAD_OTA_UPDATES=1
-    export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=0
-    export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
-    export OF_DISABLE_MIUI_OTA_BY_DEFAULT=1
-# Run a process after formatting data to work-around MTP issues
-    export OF_RUN_POST_FORMAT_PROCESS=1
-
 	lunch twrp_$FDEVICE-eng
 	# let's see what are our build VARs
 	if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then

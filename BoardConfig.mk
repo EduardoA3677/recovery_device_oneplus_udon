@@ -127,9 +127,7 @@ TW_INCLUDE_FASTBOOTD := true
 # Other TWRP Configurations
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
-TW_FRAMERATE := 120
 TW_THEME := portrait_hdpi
-TW_INPUT_BLACKLIST := "hbtp_vm"
 TW_BRIGHTNESS_PATH := "/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 4047
 TW_DEFAULT_BRIGHTNESS := 2000

@@ -43,7 +43,6 @@ service overrideprops /system/bin/overrideprops.sh
 
 on init
     start boot-hal-1-2
-    #start boot-qti
 
 on early-fs
     write /proc/sys/kernel/sched_lib_name "recovery,magiskboot,Updater,updater,update_engine_sideload"
@@ -58,7 +57,6 @@ on boot
     setprop sys.usb.config adb
     start variant-script
     start overrideprops
-    start vendor.qti.vibrator
 
 on property:twrp.modules.loaded=true
     # Mount persist
@@ -71,13 +69,12 @@ on property:twrp.modules.loaded=true
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
-    #start health-default
+    start health-hal-2-1
     start vendor.qti.vibrator
     umount /firmware
 
 on property:twrp.all.users.decrypted=true
     umount /mnt/vendor/persist
-    umount /firmware
 
 on property:init.svc.fastbootd=running
     umount /firmware

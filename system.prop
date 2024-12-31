@@ -1,4 +1,2 @@
 # Battery Property
 ro.charger.enable_suspend=1
-
-ro.adb.secure=0

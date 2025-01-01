@@ -12,17 +12,16 @@ BOARD_SYSTEMSDK_VERSIONS := 31
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-a
+TARGET_ARCH_VARIANT := armv8-a-branchprot
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_ABI2 :=
-TARGET_CPU_VARIANT := generic
-TARGET_CPU_VARIANT_RUNTIME := kryo385
+TARGET_CPU_VARIANT := kryo385
+
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-2a
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
-TARGET_2ND_CPU_VARIANT := generic
-TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a75
+TARGET_2ND_CPU_VARIANT := cortex-a75
 
 # Bootloader
 TARGET_NO_BOOTLOADER := false
@@ -94,9 +93,9 @@ TARGET_RECOVERY_DEVICE_MODULES += \
     libhidlmemory \
     libion \
     libnetutils \
+    libxml2 \
     vendor.display.config@1.0 \
-    vendor.display.config@2.0 \
-    libdebuggerd_client
+    vendor.display.config@2.0
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/recovery/root/system/etc/recovery.fstab
 
 # AVB
@@ -127,6 +126,7 @@ TW_INCLUDE_FASTBOOTD := true
 # Other TWRP Configurations
 TARGET_RECOVERY_QCOM_RTC_FIX := true
 TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+TW_BACKUP_EXCLUSIONS := /data/fonts/files
 TW_THEME := portrait_hdpi
 TW_BRIGHTNESS_PATH := "/sys/devices/platform/soc/ae00000.qcom,mdss_mdp/backlight/panel0-backlight/brightness"
 TW_MAX_BRIGHTNESS := 4047
@@ -145,6 +145,7 @@ TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone39/temp"
 TW_OVERRIDE_SYSTEM_PROPS := \
     "ro.build.product;ro.build.fingerprint=ro.vendor.build.fingerprint;ro.build.version.incremental"
 TW_OVERRIDE_PROPS_ADDITIONAL_PARTITIONS := vendor
+TW_USE_FSCRYPT_POLICY := 2
 RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.allocator@1.0.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/android.hidl.memory@1.0.so \
@@ -153,7 +154,7 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libhidlmemory.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libion.so \
     $(TARGET_OUT_SHARED_LIBRARIES)/libnetutils.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libdebuggerd_client.so \
+    $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
 TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko rproc_qcom_common.ko q6_dlkm.ko qcom_q6v5.ko qcom_q6v5_pas.ko qcom_esoc.ko qcom_sysmon.ko qcom-hv-haptics.ko goodix_ts.ko haptic_feedback.ko oplus_chg_v2.ko oplus_bsp_tp_custom.ko oplus_bsp_tp_common.ko oplus_bsp_tp_notify.ko oplus_bsp_tp_tcm_oncell.ko oplus_bsp_tp_tcm_S3910.ko oplus_bsp_tp_syna_comnon.ko oplus_bsp_tp_gt9966.ko oplus_bsp_tp_gt9916.ko"

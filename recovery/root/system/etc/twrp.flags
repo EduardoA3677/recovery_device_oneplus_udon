@@ -1,12 +1,14 @@
 
 # mount point   fstype  device                                          device2             flags
 # Logical partitions
+/system_image   emmc    /dev/block/mapper/system					                        flags=slotselect
+
 /system_ext     ext4    system_ext                                                          flags=display=system_ext
-/odm_dlkm       ext4    odm_dlkm                                                               flags=display=odm_dlkm
+/odm_dlkm       ext4    odm_dlkm                                                            flags=display=odm_dlkm
 /vendor_dlkm    ext4    vendor_dlkm                                                         flags=display=Vendor_dlkm
 
 # Userdata/Metadata partitions
-/storage        f2fs    /data/media/0                                                       flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
+/storage        ext4    /data/media/0                                                       flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
 /metadata       ext4    /dev/block/by-name/metadata                                         flags=display=metadata
 
 # Other partitions

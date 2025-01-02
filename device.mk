@@ -86,6 +86,8 @@ PRODUCT_PACKAGES += \
     android.hardware.boot@1.2-impl-qti \
     android.hardware.boot@1.2-impl-qti.recovery \
     android.hardware.boot@1.2-service
+    bootctrl.oneplus_sm8465.recovery
+
 
 # Health
 PRODUCT_PACKAGES += \

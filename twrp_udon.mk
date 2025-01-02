@@ -9,6 +9,9 @@ DEVICE_PATH := device/oneplus/udon
 # Inherit from device.mk configuration
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
+$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
+
 PRODUCT_PLATFORM := taro
 
 # Release name
@@ -20,6 +23,9 @@ PRODUCT_NAME := twrp_udon
 PRODUCT_BRAND := OnePlus
 PRODUCT_MODEL := CPH2487
 PRODUCT_MANUFACTURER := OnePlus
+PRODUCT_SYSTEM_NAME := CPH2487
+PRODUCT_SYSTEM_DEVICE := OP5961L1
+
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     TARGET_DEVICE=$(PRODUCT_SYSTEM_DEVICE) \

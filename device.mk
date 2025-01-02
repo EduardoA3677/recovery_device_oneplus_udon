@@ -79,6 +79,7 @@ TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+PRODUCT_BUILD_SUPER_PARTITION := false
 
 PRODUCT_PACKAGES += \
     otapreopt_script \
@@ -104,6 +105,9 @@ PRODUCT_PACKAGES += update_engine \
     update_verifier \
 
 PRODUCT_PACKAGES += \
+    oplusotapreopt_script
+
+PRODUCT_PACKAGES += \
   update_engine_sideload
 
 # F2FS Utilities
@@ -118,7 +122,7 @@ PRODUCT_PACKAGES += \
 
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
-    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    POSTINSTALL_PATH_system=system/bin/oplusotapreopt_script \
     FILESYSTEM_TYPE_system=ext4 \
     POSTINSTALL_OPTIONAL_system=true
 

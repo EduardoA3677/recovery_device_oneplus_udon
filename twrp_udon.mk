@@ -9,8 +9,6 @@ DEVICE_PATH := device/oneplus/udon
 # Inherit from device.mk configuration
 $(call inherit-product, $(DEVICE_PATH)/device.mk)
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
-
 
 PRODUCT_PLATFORM := taro
 

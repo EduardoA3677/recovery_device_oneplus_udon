@@ -51,9 +51,6 @@ on fs
 
 on boot
     setprop sys.usb.config adb
-    mkdir /dev/fscklogs 0770 root system
-	setprop prepdecrypt.setpatch true
-	setprop prepdecrypt.loglevel 2
     start variant-script
     start overrideprops
 

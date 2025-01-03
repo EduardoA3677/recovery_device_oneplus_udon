@@ -69,7 +69,6 @@ AB_OTA_PARTITIONS += \
     vbmeta \
     odm_dlkm
 
-
 # VNDK
 PRODUCT_TARGET_VNDK_VERSION := 31
 
@@ -79,32 +78,19 @@ TARGET_HAS_GENERIC_KERNEL_HEADERS := true
 # Dynamic partitions
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
-
-PRODUCT_PACKAGES += \
-    otapreopt_script \
+PRODUCT_PACKAGES += update_engine \
+    update_engine_client \
+    update_verifier \
     android.hardware.boot@1.2-impl-qti \
     android.hardware.boot@1.2-impl-qti.recovery \
     android.hardware.boot@1.2-service
 
-# Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl \
-    android.hardware.health@2.1-service
+  update_engine_sideload
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(COMMON_PATH)
-
-# Vibrator
-PRODUCT_PACKAGES += \
-    vendor.qti.hardware.vibrator.service
-
-PRODUCT_PACKAGES += update_engine \
-    update_engine_client \
-    update_verifier \
-
-PRODUCT_PACKAGES += \
-  update_engine_sideload
 
 # F2FS Utilities
 PRODUCT_PACKAGES += \
@@ -117,12 +103,6 @@ PRODUCT_PACKAGES += \
     checkpoint_gc
 
 AB_OTA_POSTINSTALL_CONFIG += \
-    RUN_POSTINSTALL_system=true \
-    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
-    FILESYSTEM_TYPE_system=ext4 \
-    POSTINSTALL_OPTIONAL_system=true
-
-AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_vendor=true \
     POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
     FILESYSTEM_TYPE_vendor=ext4 \
@@ -133,10 +113,11 @@ PRODUCT_EXTRA_RECOVERY_KEYS += \
     $(LOCAL_PATH)/security/local_OTA \
     $(LOCAL_PATH)/security/special_OTA
 
+# fastbootd
+PRODUCT_PACKAGES += fastbootd
 
-PRODUCT_PACKAGES += \
-    android.hardware.fastboot@1.1-impl-mock \
-    fastbootd
+# Add default implementation of fastboot HAL.
+PRODUCT_PACKAGES += android.hardware.fastboot@1.1-impl-mock
 
 # qcom decryption
 PRODUCT_PACKAGES += \
@@ -147,6 +128,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
 
 SOONG_CONFIG_NAMESPACES += ufsbsg
+
 SOONG_CONFIG_ufsbsg += ufsframework
 SOONG_CONFIG_ufsbsg_ufsframework := bsg
 

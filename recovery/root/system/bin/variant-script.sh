@@ -20,6 +20,7 @@ case $variant in
         resetprop ro.product.system_ext.model "CPH2487"
         resetprop ro.product.vendor.model "CPH2487"
         resetprop ro.product.odm.model "CPH2487"
+        resetprop ro.separate.soft "22881"
         ;;
     "22803")
     #India
@@ -35,6 +36,7 @@ case $variant in
         resetprop ro.product.system_ext.model "PHK110"
         resetprop ro.product.vendor.model "PHK110"
         resetprop ro.product.odm.model "PHK110"
+        resetprop ro.separate.soft "22803"
         ;;
     *)
         resetprop ro.product.device "OP5961L1"
@@ -49,6 +51,7 @@ case $variant in
         resetprop ro.product.system_ext.model "CPH2487"
         resetprop ro.product.vendor.model "CPH2487"
         resetprop ro.product.odm.model "CPH2487"
+        resetprop ro.separate.soft "22881"
         ;;
 esac
 

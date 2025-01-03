@@ -70,16 +70,6 @@ on property:twrp.modules.loaded=true
     # Mount firmware
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-    chown root system /dev/fscklogs/log
-    chmod 0770 /dev/fscklogs/log
-    # Load ADSP firmware for PMIC
-    insmod /vendor/lib/modules/q6_pdr_dlkm.ko
-    insmod /vendor/lib/modules/q6_notifier_dlkm.ko
-    insmod /vendor/lib/modules/snd_event_dlkm.ko
-    insmod /vendor/lib/modules/apr_dlkm.ko
-    insmod /vendor/lib/modules/gpr_dlkm.ko
-    insmod /vendor/lib/modules/spf_core_dlkm.ko
-    insmod /vendor/lib/modules/adsp_loader_dlkm.ko
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
@@ -89,12 +79,7 @@ on property:twrp.modules.loaded=true
 
 on property:twrp.all.users.decrypted=true
     umount /mnt/vendor/persist
+    umount /firmware
 
 on property:init.svc.fastbootd=running
     umount /firmware
-
-on property:hwservicemanager.ready=true
-    setprop ro.separate.soft ${ro.boot.prjname}
-
-on property:twrp.decrypt.done=true
-    setprop ro.separate.soft ${ro.boot.prjname}

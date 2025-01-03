@@ -4,10 +4,8 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/oneplus/udon
-
 # Inherit from device.mk configuration
-$(call inherit-product, $(DEVICE_PATH)/device.mk)
+$(call inherit-product, device/oneplus/udon/device.mk)
 
 
 PRODUCT_PLATFORM := taro

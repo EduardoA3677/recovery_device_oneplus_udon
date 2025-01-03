@@ -37,7 +37,7 @@ SHIPPING_API_LEVEL := 31
 PRODUCT_SHIPPING_API_LEVEL := 31
 
 # Virtual A/B
-$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota/compression.mk)
 
 # A/B updater updatable partitions list. Keep in sync with the partition list
 # with "_a" and "_b" variants in the device. Note that the vendor can add more

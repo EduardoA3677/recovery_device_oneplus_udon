@@ -43,31 +43,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 # with "_a" and "_b" variants in the device. Note that the vendor can add more
 # more partitions to this list for the bootloader and radio.
 # Main Logical Partitions
-AB_OTA_PARTITIONS := \
-    my_product \
-    my_engineering \
-    my_company \
-    my_carrier \
-    my_region \
-    my_heytap \
-    my_stock \
-    my_preload \
-    my_bigball \
-    my_manifest \
-    odm \
-    product \
-    system \
-    system_ext \
-    vendor
-
-AB_OTA_PARTITIONS += \
-    boot \
-    vendor_boot \
-    recovery \
-    vendor_dlkm \
-    dtbo \
-    vbmeta \
-    odm_dlkm
+AB_OTA_PARTITIONS ?= boot vendor_boot recovery vendor_dlkm dtbo vbmeta super odm_dlkm
 
 # VNDK
 PRODUCT_TARGET_VNDK_VERSION := 31

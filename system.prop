@@ -1,3 +1,2 @@
 # Battery Property
 ro.charger.enable_suspend=1
-ro.separate.soft=22803

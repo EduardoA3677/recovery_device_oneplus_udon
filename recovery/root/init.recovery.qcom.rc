@@ -27,45 +27,6 @@
 
 import /init.recovery.qcom_decrypt.rc
 
-on early-init
-    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
-
-on init
-    write /sys/class/backlight/panel0-backlight/brightness 200
-
-on fs
-    wait /dev/block/platform/soc/${ro.boot.bootdevice}
-    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-
-    # Load ADSP firmware for PMIC
-    mkdir /firmware
-    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
-
-on post-fs
-    start boot-hal-1-2
-    start variant-script
-    start overrideprops
-
-on property:twrp.modules.loaded=true && property:dev.mnt.blk.firmware=*
-    # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/boot
-    write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
-    wait /sys/class/oplus_chg/usb/otg_switch
-    write /sys/class/oplus_chg/usb/otg_switch 1
-    start health-hal-2-1
-    start vendor.qti.vibrator
-    umount /firmware
-
-on property:ro.twrp.fastbootd=1
-    # Load ADSP firmware for PMIC
-    wait /sys/kernel/boot_adsp/boot
-    write /sys/kernel/boot_adsp/boot 1
-    wait /sys/class/power_supply/battery
-    start health-hal-2-1
-    start vendor.qti.vibrator
-    umount /firmware
-
 service variant-script /system/bin/variant-script.sh
     user root
     group root
@@ -79,3 +40,33 @@ service overrideprops /system/bin/overrideprops.sh
     disabled
     oneshot
     seclabel u:r:recovery:s0
+
+on init
+    start boot-hal-1-2
+
+on fs
+    wait /dev/block/platform/soc/${ro.boot.bootdevice}
+    symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
+    write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+
+on boot
+    start variant-script
+    start overrideprops
+
+on property:twrp.modules.loaded=true
+    # Mount persist
+    mkdir /mnt/vendor/persist
+    mount ext4 /dev/block/bootdevice/by-name/persist /mnt/vendor/persist ro
+    # Mount firmware
+    mkdir /firmware
+    mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
+    # Load ADSP firmware for PMIC
+    wait /sys/kernel/boot_adsp/boot
+    write /sys/kernel/boot_adsp/boot 1
+    wait /sys/class/power_supply/battery
+    start health-hal-2-1
+    start vendor.qti.vibrator
+    umount /firmware
+
+on property:twrp.all.users.decrypted=true
+    umount /mnt/vendor/persist

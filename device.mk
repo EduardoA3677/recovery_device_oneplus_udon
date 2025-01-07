@@ -22,7 +22,6 @@ QCOM_BOARD_PLATFORMS += $(PRODUCT_PLATFORM)
 TARGET_BOARD_PLATFORM := $(PRODUCT_PLATFORM)
 TARGET_BOOTLOADER_BOARD_NAME := $(TARGET_BOARD_PLATFORM)
 
-
 BUILD_BROKEN_DUP_RULES := true
 
 RELAX_USES_LIBRARY_CHECK := true
@@ -30,11 +29,8 @@ RELAX_USES_LIBRARY_CHECK := true
 # A/B support
 AB_OTA_UPDATER := true
 
-
-BOARD_SHIPPING_API_LEVEL := 31
-BOARD_API_LEVEL := 31
-SHIPPING_API_LEVEL := 31
-PRODUCT_SHIPPING_API_LEVEL := 31
+# VNDK
+PRODUCT_TARGET_VNDK_VERSION := 31
 
 # Virtual A/B
 $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
@@ -43,16 +39,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/virtual_ab_ota.mk)
 # with "_a" and "_b" variants in the device. Note that the vendor can add more
 # more partitions to this list for the bootloader and radio.
 # Main Logical Partitions
-AB_OTA_PARTITIONS ?= boot vendor_boot recovery vendor_dlkm dtbo vbmeta super odm_dlkm
-
-# VNDK
-PRODUCT_TARGET_VNDK_VERSION := 31
-
-#Support to compile recovery without msm headers
-TARGET_HAS_GENERIC_KERNEL_HEADERS := true
-
-# Dynamic partitions
-PRODUCT_USE_DYNAMIC_PARTITIONS := true
+AB_OTA_PARTITIONS ?= boot vendor_boot recovery vendor vendor_dlkm odm_dlkm odm dtbo vbmeta
 
 PRODUCT_PACKAGES += update_engine \
     update_engine_client \
@@ -63,10 +50,6 @@ PRODUCT_PACKAGES += update_engine \
 
 PRODUCT_PACKAGES += \
   update_engine_sideload
-
-# Soong namespaces
-PRODUCT_SOONG_NAMESPACES += \
-    $(COMMON_PATH)
 
 # F2FS Utilities
 PRODUCT_PACKAGES += \
@@ -84,10 +67,26 @@ AB_OTA_POSTINSTALL_CONFIG += \
     FILESYSTEM_TYPE_vendor=ext4 \
     POSTINSTALL_OPTIONAL_vendor=true
 
+BOARD_SHIPPING_API_LEVEL := 31
+BOARD_API_LEVEL := 31
+SHIPPING_API_LEVEL := 31
+PRODUCT_SHIPPING_API_LEVEL := 31
+
+#Support to compile recovery without msm headers
+TARGET_HAS_GENERIC_KERNEL_HEADERS := true
+
 # Stock OEM OTA Cert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
     $(LOCAL_PATH)/security/local_OTA \
     $(LOCAL_PATH)/security/special_OTA
+
+# tell update_engine to not change dynamic partition table during updates
+# needed since our qti_dynamic_partitions does not include
+# vendor and odm and we also dont want to AB update them
+TARGET_ENFORCE_AB_OTA_PARTITION_LIST := true
+
+# Dynamic partitions
+PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
 # fastbootd
 PRODUCT_PACKAGES += fastbootd
@@ -99,6 +98,10 @@ PRODUCT_PACKAGES += android.hardware.fastboot@1.1-impl-mock
 PRODUCT_PACKAGES += \
     qcom_decrypt \
     qcom_decrypt_fbe
+
+# Soong namespaces
+PRODUCT_SOONG_NAMESPACES += \
+    $(DEVICE_PATH)
 
 # Enable Fuse Passthrough
 PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
@@ -115,6 +118,6 @@ BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 2
 
-# Soong namespaces
-PRODUCT_SOONG_NAMESPACES += $(DEVICE_PATH)
+# Enable Fuse Passthrough
+PRODUCT_PROPERTY_OVERRIDES += persist.sys.fuse.passthrough.enable=true
 

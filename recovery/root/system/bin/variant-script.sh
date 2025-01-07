@@ -21,6 +21,7 @@ case $variant in
         resetprop ro.product.vendor.model "CPH2487"
         resetprop ro.product.odm.model "CPH2487"
         resetprop ro.separate.soft "22881"
+        resetprop vendor.usb.product_string "OnePlus 11R 5G"
         ;;
     "22803")
     #India
@@ -37,6 +38,7 @@ case $variant in
         resetprop ro.product.vendor.model "PHK110"
         resetprop ro.product.odm.model "PHK110"
         resetprop ro.separate.soft "22803"
+        resetprop vendor.usb.product_string "OnePlus Ace 2"
         ;;
     *)
         resetprop ro.product.device "OP5961L1"
@@ -52,6 +54,7 @@ case $variant in
         resetprop ro.product.vendor.model "CPH2487"
         resetprop ro.product.odm.model "CPH2487"
         resetprop ro.separate.soft "22881"
+        resetprop vendor.usb.product_string "OnePlus 11R 5G"
         ;;
 esac
 

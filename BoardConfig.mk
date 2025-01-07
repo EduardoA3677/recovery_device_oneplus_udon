@@ -160,8 +160,5 @@ TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko gpr_dlkm.ko q6_notifier_dlkm.ko q
 
 TARGET_USES_LOGD := true
 TWRP_INCLUDE_LOGCAT := true
-TW_SUPPORT_INPUT_AIDL_HAPTICS := true
-TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/vibratorfeature"
-TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 
 TW_BACKUP_EXCLUSIONS := /data/fonts/files

@@ -149,6 +149,12 @@ TW_INCLUDE_RESETPROP := true
 TW_USE_SERIALNO_PROPERTY_FOR_DEVICE_ID := true
 TW_HAS_EDL_MODE := true
 TW_NO_SCREEN_BLANK  := true
+TW_SKIP_ADDITIONAL_FSTAB := true
+TW_NO_FLASH_CURRENT_TWRP := true
+TW_LOAD_VENDOR_MODULES := true
+TW_INCLUDE_REPACKTOOLS := true
+TW_USE_TOOLBOX := true
+TW_ENABLE_FS_COMPRESSION := true
 TW_CUSTOM_CPU_TEMP_PATH := "/sys/class/thermal/thermal_zone39/temp"
 TW_OVERRIDE_SYSTEM_PROPS := \
     "ro.build.product;ro.build.fingerprint=ro.vendor.build.fingerprint;ro.build.version.incremental"
@@ -164,7 +170,7 @@ RECOVERY_LIBRARY_SOURCE_FILES += \
     $(TARGET_OUT_SHARED_LIBRARIES)/libxml2.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@1.0.so \
     $(TARGET_OUT_SYSTEM_EXT_SHARED_LIBRARIES)/vendor.display.config@2.0.so
-TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko spf_core_dlkm.ko gpr_dlkm.ko apr_dlkm.ko snd_event_dlkm.ko q6_notifier_dlkm.ko q6_pdr_dlkm.ko"
+TW_LOAD_VENDOR_MODULES := "adsp_loader_dlkm.ko rproc_qcom_common.ko q6_dlkm.ko qcom_q6v5.ko qcom_q6v5_pas.ko qcom_esoc.ko qcom_sysmon.ko qcom-hv-haptics.ko goodix_ts.ko haptic_feedback.ko oplus_chg_v2.ko oplus_bsp_tp_custom.ko oplus_bsp_tp_common.ko oplus_bsp_tp_notify.ko oplus_bsp_tp_tcm_oncell.ko oplus_bsp_tp_tcm_S3910.ko oplus_bsp_tp_syna_comnon.ko oplus_bsp_tp_gt9966.ko oplus_bsp_tp_gt9916.ko"
 TW_LOAD_VENDOR_MODULES_EXCLUDE_GKI := true
 
 TARGET_USES_LOGD := true
@@ -177,3 +183,6 @@ RECOVERY_BINARY_SOURCE_FILES += $(TARGET_OUT_EXECUTABLES)/strace
 TW_SUPPORT_INPUT_AIDL_HAPTICS := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FIX_OFF := true
 TW_SUPPORT_INPUT_AIDL_HAPTICS_FQNAME := "IVibrator/default"
+
+TW_BACKUP_EXCLUSIONS := /data/fonts/files
+TW_USE_FSCRYPT_POLICY := 2

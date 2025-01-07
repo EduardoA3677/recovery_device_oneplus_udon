@@ -48,14 +48,23 @@ service set_permissive /system/bin/set_permissive.sh
     oneshot 
     seclabel u:r:recovery:s0
 
-on init
-    start boot-hal-1-2
-    start set_permissive
+on early-fs
+    write /proc/sys/walt/sched_lib_name "recovery,magiskboot,Updater,updater,update_engine_sideload"
+    write /proc/sys/walt/sched_lib_mask_force 255
 
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
+    chmod 0660 /dev/qseecom
+    chown system drmrpc /dev/qseecom
+    chmod 0664 /dev/ion
+    chown system system /dev/ion
+    install_keyring
+
+on init
+    start boot-hal-1-2
+    start set_permissive
 
 on boot
     setprop sys.usb.config mtp,adb
@@ -64,21 +73,22 @@ on boot
 
 on property:twrp.modules.loaded=true
     # Mount persist
-    mkdir /mnt/vendor/persist
-    mount ext4 /dev/block/bootdevice/by-name/persist /mnt/vendor/persist ro
-    # Mount firmware
     mkdir /firmware
     mount vfat /dev/block/bootdevice/by-name/modem${ro.boot.slot_suffix} /firmware ro
     # Load ADSP firmware for PMIC
+    insmod /vendor/lib/modules/q6_pdr_dlkm.ko
+    insmod /vendor/lib/modules/q6_notifier_dlkm.ko
+    insmod /vendor/lib/modules/snd_event_dlkm.ko
+    insmod /vendor/lib/modules/apr_dlkm.ko
+    insmod /vendor/lib/modules/gpr_dlkm.ko
+    insmod /vendor/lib/modules/spf_core_dlkm.ko
+    insmod /vendor/lib/modules/adsp_loader_dlkm.ko
     wait /sys/kernel/boot_adsp/boot
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
     start health-hal-2-1
     start vendor.qti.vibrator
     umount /firmware
-
-on property:twrp.all.users.decrypted=true
-    umount /mnt/vendor/persist
 
 on property:init.svc.fastbootd=running
     umount /firmware

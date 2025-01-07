@@ -71,7 +71,6 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 104857600
 # Workaround for error copying vendor files to recovery ramdisk
 TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_ODM := odm
-TARGET_COPY_OUT_PRODUCT := product
 TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 
 # Rules

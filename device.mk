@@ -90,9 +90,6 @@ BOARD_API_LEVEL := 31
 SHIPPING_API_LEVEL := 31
 PRODUCT_SHIPPING_API_LEVEL := 31
 
-#Support to compile recovery without msm headers
-TARGET_HAS_GENERIC_KERNEL_HEADERS := true
-
 # Stock OEM OTA Cert
 PRODUCT_EXTRA_RECOVERY_KEYS += \
     $(LOCAL_PATH)/security/local_OTA \

@@ -73,7 +73,6 @@ on property:twrp.modules.loaded=true
     write /sys/kernel/boot_adsp/boot 1
     wait /sys/class/power_supply/battery
     start health-hal-2-1
-    start vendor.qti.vibrator
     umount /firmware
 
 on property:twrp.all.users.decrypted=true

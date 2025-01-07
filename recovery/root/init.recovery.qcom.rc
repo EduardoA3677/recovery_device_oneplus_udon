@@ -58,6 +58,7 @@ on fs
     write /proc/sys/kernel/firmware_config/force_sysfs_fallback 1
 
 on boot
+    setprop sys.usb.config mtp,adb
     start variant-script
     start overrideprops
 
@@ -78,3 +79,6 @@ on property:twrp.modules.loaded=true
 
 on property:twrp.all.users.decrypted=true
     umount /mnt/vendor/persist
+
+on property:init.svc.fastbootd=running
+    umount /firmware

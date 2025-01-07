@@ -1,12 +1,20 @@
 
 # mount point   fstype  device                                          device2             flags
 # Logical partitions
-/system_ext     ext4    system_ext                                                          flags=display=system_ext
-/odm_dlkm       ext4    odm_dlkm                                                            flags=display=odm_dlkm
-/vendor_dlkm    ext4    vendor_dlkm                                                         flags=display=Vendor_dlkm
+/system         ext4      system                                                            flags=display=system;logical;slotselect
+/system         erofs     system                                                            flags=display=system;logical;slotselect
+/system_ext     ext4      system_ext                                                        flags=display=system_ext;logical;slotselect
+/system_ext     erofs     system_ext                                                        flags=display=system_ext;logical;slotselect
+/product        ext4      product                                                           flags=display=product;logical;slotselect
+/product        erofs     product                                                           flags=display=product;logical;slotselect
+/vendor         ext4      vendor                                                            flags=display=vendor;logical;slotselect
+/vendor         erofs     vendor                                                            flags=display=vendor;logical;slotselect
+/odm            ext4      odm                                                               flags=display=odm;logical;slotselect
+/odm            erofs     odm                                                               flags=display=odm;logical;slotselect
 
 # Userdata/Metadata partitions
-/storage        ext4    /data/media/0                                                       flags=display="Internal Storage";usermrf;backup=1;fsflags="bind";removable
+/data           f2fs    /dev/block/bootdevice/by-name/userdata                              flags=display=data
+/metadata       ext4    /dev/block/by-name/metadata                                         flags=display=metadata
 
 # Other partitions
 /boot           emmc    /dev/block/bootdevice/by-name/boot                                  flags=slotselect
@@ -17,6 +25,9 @@
 /dtbo           emmc    /dev/block/bootdevice/by-name/dtbo                                  flags=slotselect;display="dtbo";backup=1;flashimg=1
 /vbmeta         emmc    /dev/block/bootdevice/by-name/vbmeta                                flags=slotselect;display="vbmeta";backup=1;flashimg=1
 /vbmeta_system  emmc    /dev/block/bootdevice/by-name/vbmeta_system                         flags=slotselect;display="vbmeta system";backup=1;flashimg=1
+/vbmeta_vendor  emmc    /dev/block/bootdevice/by-name/vbmeta_vendor                         flags=slotselect;display="vbmeta vendor";backup=1;flashimg=1
+/keymaster      emmc    /dev/block/bootdevice/by-name/keymaster                  flags=display=keymaster
+
 
 # Persistent Firmware & Properties
 /firmware       vfat    /dev/block/bootdevice/by-name/modem                                 flags=slotselect;display="firmware";mounttodecrypt;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0"

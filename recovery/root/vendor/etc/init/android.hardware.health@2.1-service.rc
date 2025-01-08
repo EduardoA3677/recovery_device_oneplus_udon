@@ -1,4 +1,0 @@
-service health-hal-2-1 /system/bin/android.hardware.health@2.1-service -r
-    setenv LD_LIBRARY_PATH /vendor/lib64:/vendor/lib:/system/lib64:/system/lib:/sbin
-    disabled
-    seclabel u:r:recovery:s0
